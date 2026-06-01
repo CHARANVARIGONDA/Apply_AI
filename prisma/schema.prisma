@@ -1,0 +1,66 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model UserConfig {
+  id                  Int      @id @default(1)
+  resumePath          String?  // Saved local path
+  parsedProfile       String?  // JSON stringified parsed profile from Claude
+  targetTitle         String   @default("")
+  locations           String   @default("[]") // JSON string array
+  workModes           String   @default("[]") // JSON string array (Remote, Hybrid, Onsite)
+  salaryMin           Int      @default(0)
+  salaryMax           Int      @default(0)
+  strategy            String   @default("balanced") // startup, mnc, balanced
+  industryPreferences String   @default("[]") // JSON string array
+  userEmail           String   @default("")
+  gmailAppPassword    String   @default("") // Gmail app password
+  safetyMinScore      Int      @default(70)
+  safetyInterval      Int      @default(30) // spacing in minutes
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model DocumentVault {
+  id          String   @id @default(uuid())
+  type        String   // COVER_LETTER, PORTFOLIO, CERTIFICATIONS, SKILL_SHEET
+  name        String
+  filePath    String?  // local filename/path
+  aiGenerate  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model JobApplication {
+  id                    String    @id @default(uuid())
+  title                 String
+  company               String
+  description           String
+  location              String
+  salary                String?
+  workMode              String    // Remote, Hybrid, Onsite
+  url                   String    @unique
+  sourceUrl             String    @default("")
+  targetEmail           String    @default("")
+  source                String    // RemoteOK, Arbeitnow, The Muse, HN, etc.
+  matchScore            Int       @default(0)
+  gapAnalysis           String?   // JSON string of matches/gaps/missing-keywords
+  customizedResumePath  String?   // local path or modified text
+  customizedCoverLetter String?   // generated cover letter text
+  status                String    @default("QUEUED") // QUEUED, CUSTOMIZING, APPLIED, ACTION_NEEDED
+  appliedAt             DateTime?
+  errorReason           String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model SystemEventLog {
+  id        String   @id @default(uuid())
+  level     String   // SUCCESS, INFO, WARNING, ERROR
+  message   String
+  timestamp DateTime @default(now())
+}

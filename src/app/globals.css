@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Orbitron', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-cyber-bg: var(--color-bg-base);
+  --color-cyber-panel: var(--color-bg-panel);
+  --color-cyber-border: var(--color-border-base);
+  --color-cyber-text: var(--color-text-base);
+  --color-cyber-accent: var(--color-accent-base);
+}
+
+:root {
+  /* Light Mode Tokens */
+  --color-bg-base: #F9FAFB;
+  --color-bg-panel: rgba(255, 255, 255, 0.75);
+  --color-border-base: rgba(15, 23, 42, 0.08);
+  --color-text-base: #1F2937;
+  --color-accent-base: #3B82F6; /* Azure */
+
+  --background: #F9FAFB;
+  --foreground: #1F2937;
+}
+
+.dark {
+  /* Dark Mode Tokens */
+  --color-bg-base: #030712;
+  --color-bg-panel: rgba(11, 15, 25, 0.65);
+  --color-border-base: rgba(255, 255, 255, 0.06);
+  --color-text-base: #f3f4f6;
+  --color-accent-base: #06B6D4; /* Cyan */
+
+  --background: #030712;
+  --foreground: #f3f4f6;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.35);
+}
+
+/* Selection Highlight */
+::selection {
+  background: rgba(6, 182, 212, 0.25);
+  color: var(--color-accent-base);
+}
+
+/* Glassmorphism panel utility */
+.glass-panel {
+  background: var(--color-bg-panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-cyber-border);
+  color: var(--color-text-base);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-panel-heavy {
+  background: var(--color-bg-panel);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--color-cyber-border);
+  color: var(--color-text-base);
+}
+
+.glass-card {
+  background: var(--color-bg-panel);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0.5px solid var(--color-cyber-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Form inputs styling */
+.cyber-input-wrapper {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.cyber-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-border-base);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--color-text-base);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.cyber-input:focus {
+  border-color: var(--color-accent-base);
+  background: rgba(6, 182, 212, 0.02);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+}
+
+/* Neon utilities */
+.text-neon-cyan {
+  text-shadow: 0 0 10px rgba(6, 182, 212, 0.4), 0 0 2px rgba(6, 182, 212, 0.2);
+}
+
+.text-neon-purple {
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.4), 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+.border-neon-cyan:hover {
+  border-color: rgba(6, 182, 212, 0.6);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+}
+
+/* Shimmer Skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Custom glow effect */
+.glow-effect {
+  position: relative;
+}
+
+.glow-effect::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(90deg, #06B6D4, #3B82F6, #8B5CF6);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-effect:hover::after {
+  opacity: 0.5;
+}
